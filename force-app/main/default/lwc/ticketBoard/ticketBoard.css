@@ -10,8 +10,14 @@
 }
 
 .board-card {
-  cursor: grab;
+  cursor: pointer;
   background: var(--slds-g-color-neutral-base-100, #fff);
+  transition: box-shadow 0.15s ease-in-out;
+}
+
+.board-card:hover,
+.board-card:focus-visible {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 .board-card:active {

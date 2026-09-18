@@ -1,6 +1,6 @@
 # CLD-2 — Ticket layout and board record modal
 
-**Status:** Approved
+**Status:** Implemented
 **Branch:** `CLD-2-ticket-layout-board-modal` (based on `CLD-1-ticket-management-system`)
 **Created:** 2026-09-18
 
@@ -81,3 +81,11 @@ It satisfies all settled answers, keeps the page layout as the single source of 
 - A Lightning record page flexipage (Highlights panel, Related tab) is out of scope; revisit if the default record page is insufficient.
 - Claude-assisted features (triage, summarisation) remain deferred to a later ticket.
 - CLD-1 and CLD-2 must reach `main` once the SSL push problem is fixed; CLD-2 will then need no rebase because it is a linear descendant of CLD-1.
+
+**Implementation notes (2026-09-18)**
+
+- Deployed to `claude-dev` (deploy id `0Affj00000RjpBjCAJ`): 16 components, 2 Apex tests passed. 18 Jest tests pass (10 board, 8 modal), ESLint and Prettier clean.
+- sfdx-lwc-jest 7 has no stub for the `lightning/modal` base class, only for its header/body/footer. Added `force-app/test/jest-mocks/lightning/modal.js` and a `moduleNameMapper` entry in `jest.config.js`; `**/jest-mocks/**` added to `.forceignore` so it never deploys.
+- A `CustomEvent` turns an undefined `detail` into `null`, so tests assert `toBeFalsy()` for a close with no result.
+- Mocking a `c/` component with a `jest.mock` factory needs `__esModule: true` on the returned object, otherwise Babel's default-import interop nests the mock one level too deep. `virtual: true` must not be used for `c/` modules or the mock is not matched.
+- Cards track `isDragging` between `dragstart` and `dragend`; a click during that window is ignored so drags never open the modal.

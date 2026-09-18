@@ -12,3 +12,6 @@ package.xml
 **/__tests__/**
 
 node_modules/
+
+# Jest mocks (not Salesforce metadata)
+**/jest-mocks/**
