@@ -1,6 +1,6 @@
 # CLD-1 — Ticket management system
 
-**Status:** Implemented
+**Status:** Merged to qa
 **Branch:** `CLD-1-ticket-management-system`
 **Created:** 2026-09-18
 
