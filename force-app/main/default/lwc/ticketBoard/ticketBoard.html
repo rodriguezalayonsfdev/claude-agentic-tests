@@ -1,0 +1,59 @@
+<template>
+  <lightning-card title="Ticket Board" icon-name="standard:task">
+    <div class="slds-p-horizontal_small slds-is-relative">
+      <template lwc:if={isSaving}>
+        <lightning-spinner
+          alternative-text="Saving"
+          size="small"
+        ></lightning-spinner>
+      </template>
+      <div class="board slds-grid slds-gutters_x-small slds-wrap">
+        <template for:each={columns} for:item="column">
+          <div
+            key={column.key}
+            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4"
+          >
+            <div
+              class={column.columnClass}
+              data-status={column.status}
+              data-testid="column"
+              ondragover={handleDragOver}
+              ondragleave={handleDragLeave}
+              ondrop={handleDrop}
+            >
+              <h2 class="slds-text-heading_small slds-m-bottom_x-small">
+                {column.status}
+                <span class="slds-badge slds-m-left_x-small" data-testid="count"
+                  >{column.count}</span
+                >
+              </h2>
+              <template for:each={column.cards} for:item="card">
+                <article
+                  key={card.id}
+                  class="board-card slds-card slds-p-around_x-small slds-m-bottom_x-small"
+                  draggable="true"
+                  data-id={card.id}
+                  data-status={card.status}
+                  data-testid="card"
+                  ondragstart={handleDragStart}
+                >
+                  <div
+                    class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center"
+                  >
+                    <span class="slds-text-title_bold">{card.name}</span>
+                    <span class={card.priorityClass}>{card.priority}</span>
+                  </div>
+                  <p
+                    class="slds-text-body_small slds-text-color_weak slds-m-top_xx-small"
+                  >
+                    {card.assignee}
+                  </p>
+                </article>
+              </template>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </lightning-card>
+</template>

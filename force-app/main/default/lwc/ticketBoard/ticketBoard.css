@@ -1,0 +1,19 @@
+.board-column {
+  min-height: 12rem;
+  background: var(--slds-g-color-neutral-base-95, #f3f3f3);
+  transition: background-color 0.15s ease-in-out;
+}
+
+.board-column_over {
+  background: var(--slds-g-color-brand-base-90, #d8e6fe);
+  outline: 2px dashed var(--slds-g-color-brand-base-50, #0176d3);
+}
+
+.board-card {
+  cursor: grab;
+  background: var(--slds-g-color-neutral-base-100, #fff);
+}
+
+.board-card:active {
+  cursor: grabbing;
+}
