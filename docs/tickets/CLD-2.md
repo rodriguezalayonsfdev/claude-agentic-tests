@@ -1,6 +1,6 @@
 # CLD-2 — Ticket layout and board record modal
 
-**Status:** Implemented
+**Status:** Merged to qa
 **Branch:** `CLD-2-ticket-layout-board-modal` (based on `CLD-1-ticket-management-system`)
 **Created:** 2026-09-18
 
