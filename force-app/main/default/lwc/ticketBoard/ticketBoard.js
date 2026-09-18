@@ -5,6 +5,7 @@ import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import getTickets from "@salesforce/apex/TicketBoardController.getTickets";
 import ID_FIELD from "@salesforce/schema/Ticket__c.Id";
 import STATUS_FIELD from "@salesforce/schema/Ticket__c.Status__c";
+import TicketModal from "c/ticketModal";
 
 export const STATUSES = ["New", "In progress", "Blocked", "Done"];
 
@@ -14,10 +15,13 @@ const PRIORITY_BADGE = {
   Low: "slds-badge"
 };
 
+const REFRESH_RESULTS = new Set(["saved", "deleted"]);
+
 export default class TicketBoard extends LightningElement {
   tickets = [];
   dragOverStatus = null;
   draggedId = null;
+  isDragging = false;
   isSaving = false;
   wiredResult;
 
@@ -59,11 +63,16 @@ export default class TicketBoard extends LightningElement {
   }
 
   handleDragStart(event) {
+    this.isDragging = true;
     this.draggedId = event.currentTarget.dataset.id;
     if (event.dataTransfer) {
       event.dataTransfer.setData("text/plain", this.draggedId);
       event.dataTransfer.effectAllowed = "move";
     }
+  }
+
+  handleDragEnd() {
+    this.isDragging = false;
   }
 
   handleDragOver(event) {
@@ -106,6 +115,21 @@ export default class TicketBoard extends LightningElement {
       .finally(() => {
         this.isSaving = false;
       });
+  }
+
+  async handleCardClick(event) {
+    if (this.isDragging) {
+      return;
+    }
+    const recordId = event.currentTarget.dataset.id;
+    const result = await TicketModal.open({
+      recordId,
+      size: "medium",
+      label: "Ticket"
+    });
+    if (REFRESH_RESULTS.has(result)) {
+      await refreshApex(this.wiredResult);
+    }
   }
 
   showError(title, error) {

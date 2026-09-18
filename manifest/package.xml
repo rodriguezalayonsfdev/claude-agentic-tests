@@ -75,5 +75,9 @@
         <members>*</members>
         <name>ListView</name>
     </types>
+    <types>
+        <members>Ticket__c-Ticket Layout</members>
+        <name>Layout</name>
+    </types>
     <version>67.0</version>
 </Package>

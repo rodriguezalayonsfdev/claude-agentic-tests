@@ -1,0 +1,48 @@
+<template>
+  <lightning-modal-header label={title}></lightning-modal-header>
+  <lightning-modal-body>
+    <div class="slds-is-relative">
+      <template lwc:if={isDeleting}>
+        <lightning-spinner
+          alternative-text="Deleting"
+          size="small"
+        ></lightning-spinner>
+      </template>
+      <lightning-record-form
+        record-id={recordId}
+        object-api-name="Ticket__c"
+        layout-type="Full"
+        columns="2"
+        mode={mode}
+        onsuccess={handleSuccess}
+        oncancel={handleCancelEdit}
+        onerror={handleError}
+        data-testid="form"
+      ></lightning-record-form>
+    </div>
+  </lightning-modal-body>
+  <lightning-modal-footer>
+    <lightning-button
+      variant="destructive-text"
+      label="Delete"
+      onclick={handleDelete}
+      disabled={isDeleting}
+      data-testid="delete"
+    ></lightning-button>
+    <lightning-button
+      label="Close"
+      onclick={handleClose}
+      class="slds-m-left_x-small"
+      data-testid="close"
+    ></lightning-button>
+    <template lwc:if={isReadonly}>
+      <lightning-button
+        variant="brand"
+        label="Edit"
+        onclick={handleEdit}
+        class="slds-m-left_x-small"
+        data-testid="edit"
+      ></lightning-button>
+    </template>
+  </lightning-modal-footer>
+</template>

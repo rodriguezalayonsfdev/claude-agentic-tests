@@ -32,10 +32,14 @@
                   key={card.id}
                   class="board-card slds-card slds-p-around_x-small slds-m-bottom_x-small"
                   draggable="true"
+                  role="button"
+                  tabindex="0"
                   data-id={card.id}
                   data-status={card.status}
                   data-testid="card"
                   ondragstart={handleDragStart}
+                  ondragend={handleDragEnd}
+                  onclick={handleCardClick}
                 >
                   <div
                     class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center"
